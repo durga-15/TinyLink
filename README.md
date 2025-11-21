@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## TinyLink
+
+TinyLink is a compact bit.ly-style URL shortener built with Next.js 16 (App Router), Prisma, and Postgres. It offers a polished dashboard to create, search, and delete short links, a stats page for each code, redirect tracking, and an operational health endpoint.
+
+### Tech stack
+- Next.js 16 App Router + React Server Components
+- Prisma + Postgres (Neon friendly)
+- Tailwind CSS (v4 preview)
+- SWR for realtime UI refresh
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### 1. Configure environment
+Copy the sample env file and fill in your credentials:
+
+```bash
+cp env.example .env
+```
+
+Required variables:
+
+| Variable | Description |
+| --- | --- |
+| `DATABASE_URL` | Postgres connection string (Neon/Render/Railway). |
+| `NEXT_PUBLIC_SITE_URL` | Base URL for generating full short links (e.g., `https://tinylink.vercel.app`). |
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Apply migrations
+
+```bash
+npm run prisma:migrate -- --name init
+```
+
+For production/CI use `npm run prisma:deploy`.
+
+### 4. Run locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Navigate to [http://localhost:3000](http://localhost:3000) to access the dashboard.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 5. Build for production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## API Reference
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Method | Path | Description |
+| --- | --- | --- |
+| `GET` | `/healthz` | Returns uptime/version for monitoring. |
+| `GET` | `/api/links` | List all links. Optional `?search=` query to filter by code or URL. |
+| `POST` | `/api/links` | Create a new short link. Body: `{ url: string, code?: string }`. Returns `409` if code exists. |
+| `GET` | `/api/links/:code` | Detailed stats for a specific code. |
+| `DELETE` | `/api/links/:code` | Delete a link; redirect stops responding. |
+| `GET` | `/code/:code` | Stats page (HTML). |
+| `GET` | `/:code` | 302 redirect to the original URL and increments counters. Returns 404 when missing. |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Deployment Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Provision a Neon (or compatible) Postgres database.
+2. Set the `DATABASE_URL` and `NEXT_PUBLIC_SITE_URL` variables in your hosting provider (Vercel/Render/Railway).
+3. Run `npm run prisma:deploy` or `npx prisma migrate deploy` as part of your deploy script.
+4. Deploy the Next.js app (`npm run build`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Additional Deliverables
+
+- **Production URL:** `https://<your-project>.vercel.app`
+- **Source code:** push this repo to GitHub.
+- **Walkthrough video:** record a short Loom/Screenity tour covering architecture, DB schema, and UX.
+- **AI usage log:** export the ChatGPT/LLM transcript and include it alongside your submission.

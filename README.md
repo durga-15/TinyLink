@@ -24,7 +24,7 @@ Required variables:
 | Variable | Description |
 | --- | --- |
 | `DATABASE_URL` | Postgres connection string (Neon/Render/Railway). |
-| `NEXT_PUBLIC_SITE_URL` | Base URL for generating full short links (e.g., `https://tiny-link-c6rp0lo4g-durga-prasad-patras-projects.vercel.app/`). |
+| `NEXT_PUBLIC_SITE_URL` | Base URL for generating full short links (e.g., `tiny-link-self.vercel.app`). |
 
 ### 2. Install dependencies
 

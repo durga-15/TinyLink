@@ -24,7 +24,7 @@ Required variables:
 | Variable | Description |
 | --- | --- |
 | `DATABASE_URL` | Postgres connection string (Neon/Render/Railway). |
-| `NEXT_PUBLIC_SITE_URL` | Base URL for generating full short links (e.g., `https://tinylink.vercel.app`). |
+| `NEXT_PUBLIC_SITE_URL` | Base URL for generating full short links (e.g., `https://tiny-link-c6rp0lo4g-durga-prasad-patras-projects.vercel.app/`). |
 
 ### 2. Install dependencies
 
@@ -78,11 +78,3 @@ npm start
 3. Run `npm run prisma:deploy` or `npx prisma migrate deploy` as part of your deploy script.
 4. Deploy the Next.js app (`npm run build`).
 
----
-
-## Additional Deliverables
-
-- **Production URL:** `https://<your-project>.vercel.app`
-- **Source code:** push this repo to GitHub.
-- **Walkthrough video:** record a short Loom/Screenity tour covering architecture, DB schema, and UX.
-- **AI usage log:** export the ChatGPT/LLM transcript and include it alongside your submission.
